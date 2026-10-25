@@ -1,0 +1,59 @@
+name: Amaquet Java SDK
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Check Java and Maven versions
+        run: |
+          java -version
+          mvn --version
+
+      - name: Build and test
+        run: mvn --batch-mode --no-transfer-progress clean verify
+
+      - name: Compile examples
+        if: matrix.os == 'ubuntu-latest'
+        shell: bash
+        run: |
+          find examples -type f -name '*.java' -print | sort > target/example-sources.txt
+          javac --release 17 \
+            -cp target/classes \
+            -d target/examples \
+            @target/example-sources.txt
+
+      - name: Check Javadoc
+        if: matrix.os == 'ubuntu-latest'
+        shell: bash
+        run: |
+          javadoc -quiet -Xdoclint:all \
+            -d target/javadocs \
+            -sourcepath src/main/java \
+            -subpackages com.newfoundcodes.amaquet
+
+      - name: Run deterministic fuzz smoke test
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          java -cp target/classes:target/test-classes \
+            com.newfoundcodes.amaquet.FuzzTargets 2000
