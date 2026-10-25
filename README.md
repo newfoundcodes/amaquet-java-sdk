@@ -153,7 +153,7 @@ The admin API is distinct from the native protocol and has its own authenticatio
 
 ## Running examples
 
-After running `mvn package`, compile the examples against the built library:
+The repository contains 91 type examples and 42 standalone workflow examples. After running `mvn package`, compile the examples against the built library:
 
 ```bash
 find examples -name '*.java' | sort > target/example-sources.txt
@@ -163,7 +163,7 @@ java -cp target/classes:target/examples Workflow03ExactIntegers
 java -cp target/classes:target/examples ExampleAtomicCounter
 ```
 
-Configure `AMAQUET_URL`, `AMAQUET_API_KEY`, `AMAQUET_ADMIN_URL`, and `AMAQUET_ADMIN_TOKEN`. Type examples create the documented type by default. Set `AMAQUET_RUN_OPERATIONS=true` to run its documented operations, which can mutate or block. Use a dedicated test server.
+Configure `AMAQUET_URL`, `AMAQUET_API_KEY`, `AMAQUET_ADMIN_URL`, and `AMAQUET_ADMIN_TOKEN`. The equivalent C# and Go examples use `AMAQUET_ENDPOINT` and `AMAQUET_URI` for the native URI. Type examples create the documented type by default. Set `AMAQUET_RUN_OPERATIONS=true` to run its documented operations, which can mutate or block. Use a dedicated test server.
 
 ## Native protocol and security
 
