@@ -1,3 +1,14 @@
+/*
+ * Amaquet Java SDK - A Newfoundcodes project.
+ *
+ * Copyright (C) 2026 Jonathan Eldy Baldivicio
+ *
+ * Author: Jonathan Eldy Baldivicio
+ * Contact: jonathaneldy.baldivicio@newfoundcodes.com
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
 /**
  * Provides the Amaquet Java SDK.
  *
