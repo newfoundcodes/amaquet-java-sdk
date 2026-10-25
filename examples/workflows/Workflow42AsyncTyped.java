@@ -1,0 +1,33 @@
+import com.newfoundcodes.amaquet.*;
+import java.util.*;
+
+/** Example 42: AsyncTyped. Connects to a running Amaquet server. */
+public final class Workflow42AsyncTyped {
+  /** Creates an instance of this example entrypoint. */
+  public Workflow42AsyncTyped() {}
+
+  /**
+   * Runs this example against the configured Amaquet server.
+   *
+   * @param args command-line arguments; the examples use their source-defined defaults.
+   * @throws Exception if the example cannot connect or complete its scenario.
+   */
+  public static void main(String[] args) throws Exception {
+    String uri = System.getenv().getOrDefault("AMAQUET_URL", "amaquet://127.0.0.1:13378");
+    Client.Options options = new Client.Options().apiKey(System.getenv("AMAQUET_API_KEY"));
+    String key = "java:example:" + java.util.UUID.randomUUID();
+
+    try (Client c = Client.connect(uri, options)) {
+      TypeHandle h = c.typed().forType("atomic_counter", key);
+      try {
+        h.create(Json.map("initial", 0));
+        System.out.println(
+            c.asyncCommand(
+                    "OP", Json.map("key", key, "operation", "ADD", "args", Json.map("delta", 1)))
+                .get());
+      } finally {
+        c.delete(key);
+      }
+    }
+  }
+}
