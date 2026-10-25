@@ -1,4 +1,10 @@
-# Amaquet Java SDK
+<div align="center">
+  <img src="https://amaquet.newfoundcodes.com/amaquet.png" width="128" />
+  <h1>Amaquet Java SDK</h1>
+  <p>
+    <a href="https://github.com/newfoundcodes/amaquet-java-sdk/actions"><img src="https://github.com/newfoundcodes/amaquet-java-sdk/actions/workflows/ci.yml/badge.svg" alt="Build Status"></a>
+  </p>
+</div>
 
 Native Java 17+ client for a **running Amaquet server**. It supports Amaquet's own 24-byte-header TCP/TLS protocol v1 and its separate HTTP administration interface. The data plane is **not Redis RESP** and is **not an HTTP API**.
 
