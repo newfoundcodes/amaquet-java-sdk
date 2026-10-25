@@ -8,30 +8,6 @@
 
 Native Java 17+ client for a **running Amaquet server**. It supports Amaquet's own 24-byte-header TCP/TLS protocol v1 and its separate HTTP administration interface. The data plane is **not Redis RESP** and is **not an HTTP API**.
 
-## Coverage matrix
-
-| Feature | Java implementation |
-|---|---|
-| Native opcodes | All 6: `COMMAND`, `HELLO`, `AUTH`, `SUBSCRIBE`, `UNSUBSCRIBE`, `CANCEL` |
-| Native top-level commands | All 23 documented names |
-| Server wire types | All 91, generated named handles |
-| Type-specific methods | All 242 documented `OP` methods |
-| Administration HTTP API | All 33 method/path combinations |
-| Network | TCP and TLS using JDK streams and JSSE |
-| Authentication | Native API key; admin Bearer or `X-Amaquet-Admin-Token`; admin session cookie |
-| Identity | Signed Ed25519 HELLO verification, optional public-key/fingerprint pinning |
-| Concurrency | Thread-safe writes, response correlation by request ID, out-of-order replies, `CompletableFuture` API |
-| Cancellation | Explicit `CANCEL` and best-effort `CANCEL` on command timeout |
-| Pub/Sub | Server channel subscription and bounded best-effort local event queue |
-| Binary | Staged begin/chunk/commit/abort and ranged reads, streaming uploads/downloads |
-| Pool | Fixed-size round-robin connection pool; explicit connection replacement |
-| JSON | Built-in bounded parser, exact integers (`BigInteger`) and decimals (`BigDecimal`) |
-| Test assets | 91 type examples, 42 workflow examples, 91 JSON reference scenarios, JUnit suite, 13 fuzz targets, TLS test, optional live-server test |
-
-No third-party **runtime** dependencies. The Maven test phase requires JUnit 5 as a test-only dependency.
-
-The documented interface inventory is mapped and tested with controlled servers. Live type scenarios require a dedicated Amaquet test instance; they are opt-in and are not run by the default test commands.
-
 ## Requirements
 
 - JDK 17 or later (recommended JDK 21).
